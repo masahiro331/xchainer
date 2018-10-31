@@ -1,25 +1,29 @@
-#Overview
-##About
+# Overview
+## About
 Xchainer is an expansion tool of [Chainer](http://chainer.org/).
 
 ## Aim
 1. To use functions for model evaluation of [Scikit-learn](http://scikit-learn.org/stable/).
-2. To simplify coding of NN learning process. 
+2. To simplify coding of NN learning process.
 
-##Quick Start
-###Install
+## Quick Start
+### Install
+
 ```shell
 git clone https://github.com/recruit-tech/xchainer.git
 cd xchainer
 pip install -r requirements.txt
 pip install .
 ```
-###Test
+
+### Test
+
 ```shell
 $ python -m unittest discover -s tests
 ```
 
-###Examples (mnist)
+### Examples (mnist)
+
 ```shell
 $ python ./examples/mnist_simple.py
 ```
@@ -32,40 +36,43 @@ $ python ./examples/mnist_complex.py
 
 It perform 2-fold cross validation test of complex NN for mnist data (10 class).
 
-##License
+## License
 MIT License (See a License file)
 
-#日本語ドキュメント
-##About
-Scikit-learnとのアダプターなどを提供するChainerの拡張モジュールです。
-本モジュールの目的は、Chainerにおける学習プロセスの記述の簡略化及び評価・手段の拡充です。
-Scikit-learnの評価モジュールを利用するために、Scikit-learnの学習器としてChainerをラップしています。
-Chainerの基本的な使い方につきましては、公式のチュートリアルをご参照ください。
+# 日本語ドキュメント
+## About
+
+Scikit-learnとのアダプターなどを提供するChainerの拡張モジュールです。 <br>
+本モジュールの目的は、Chainerにおける学習プロセスの記述の簡略化及び評価・手段の拡充です。<br>
+Scikit-learnの評価モジュールを利用するために、Scikit-learnの学習器としてChainerをラップしています。<br>
+Chainerの基本的な使い方につきましては、公式のチュートリアルをご参照ください。<br>
 
 * [Chainer Tutorial](http://docs.chainer.org/en/latest/tutorial/index.html)
 
-##Coding style
+## Coding style
 本モジュールのコードは、python標準のPEP8に則って開発しています。
 
 * [pep8 日本語ドキュメント](http://pep8-ja.readthedocs.org/ja/latest/)
 
-#Documentation
-##NNmanager
-`NNmanager`は、学習プロセスのパラメータ化により、必要最低限の記述によるネットワークの定義を可能にします。
+# Documentation
+## NNmanager
+
+`NNmanager`は、学習プロセスのパラメータ化により、必要最低限の記述によるネットワークの定義を可能にします。 <br>
 また、`NNmanager`はScikit-learnの学習器として拡張されているため、交差確認法やAUC評価など、Scikit-learnから提供されている様々な評価モジュールを利用することができます。
 
 
-###Start with Example
-`NNmanager`は学習器の枠組みを提供するインタフェースです。`NNmanager`を継承し、目的に応じて拡張することで、学習器を作ることができます。
-継承の際必要になるのは、ネットワーク構造`model`、最適化関数`optimizer`、損失関数`lossFunction`の三つです。ここで、`model`は`chainer.FunctionSet`クラスのインスタンスで、ネットワークのパラメータを全てまとめて管理する役目を持ちます。`optimizer`は`chainer.optimizers`で提供される最適化関数、`lossFunction`は`chainer.functions`で提供される損失関数です。
-詳しくは[chainerのリファレンスマニュアル](http://docs.chainer.org/en/latest/reference/index.html)をご参照ください。
+### Start with Example
+
+`NNmanager`は学習器の枠組みを提供するインタフェースです。`NNmanager`を継承し、目的に応じて拡張することで、学習器を作ることができます。<br>
+継承の際必要になるのは、ネットワーク構造`model`、最適化関数`optimizer`、損失関数`lossFunction`の三つです。ここで、`model`は`chainer.FunctionSet`クラスのインスタンスで、ネットワークのパラメータを全てまとめて管理する役目を持ちます。`optimizer`は`chainer.optimizers`で提供される最適化関数、`lossFunction`は`chainer.functions`で提供される損失関数です。 <br>
+詳しくは[chainerのリファレンスマニュアル](http://docs.chainer.org/en/latest/reference/index.html)をご参照ください。<br>
 
 * [chainer FunctionSet](http://chainer.readthedocs.org/en/latest/reference/core/function_set.html)
 * [chainer optimizers](http://chainer.readthedocs.org/en/latest/reference/optimizers.html)
 * [chainer functions](http://chainer.readthedocs.org/en/latest/reference/functions.html)
 
-これらに加えて、オプションとして`params`を渡すことができます。`params`はdict型です。設定できる項目は、エポック数`epoch`、バッチサイズ`batchsize`、学習ログ表示フラグ`logging`です。
-拡張の際に必要になるのは、`forward`メソッドと`trimOutput`メソッドの定義です。これにより、学習器を具体化します。
+これらに加えて、オプションとして`params`を渡すことができます。`params`はdict型です。設定できる項目は、エポック数`epoch`、バッチサイズ`batchsize`、学習ログ表示フラグ`logging`です。<br>
+拡張の際に必要になるのは、`forward`メソッドと`trimOutput`メソッドの定義です。これにより、学習器を具体化します。<br>
 
 ここでは、例として手書き文字認識のデータを対象にしたネットワークをあげます。
 
@@ -110,9 +117,10 @@ class TestNNM(NNmanager, ClassifierMixin):
 * [Scikit-learn ClassifierMixin](http://scikit-learn.org/stable/modules/generated/sklearn.base.ClassifierMixin.html)
 * [Scikit-learn RegressorMixin](http://scikit-learn.org/stable/modules/generated/sklearn.base.RegressorMixin.html)
 
-####forward
-NNmanagerでは順伝播`forward`メソッドを定義すれば、ニューラルネットワークの学習過程を構築できます。
-ニューラルネットワークにおける学習は、ネットワーク構造に強く依存します。Chainerでは、基本的にネットワーク構造に即した定義が必要なのは順方向の伝播だけで、その他の過程は一般化することができます。
+#### forward
+
+NNmanagerでは順伝播`forward`メソッドを定義すれば、ニューラルネットワークの学習過程を構築できます。<br>
+ニューラルネットワークにおける学習は、ネットワーク構造に強く依存します。Chainerでは、基本的にネットワーク構造に即した定義が必要なのは順方向の伝播だけで、その他の過程は一般化することができます。<br>
 `forward`メソッドは、ネットワークの入力層への入力`x_batch`を受け取り、出力層からの出力`output`を返します。ここで、`output`は`chainer.Variable`クラスのインスタンスです。`train`はネットワークの学習フラグで、`fit`の際には`True`、`predict`の際には`False`が入ります。
 
 
@@ -126,8 +134,9 @@ NNmanagerでは順伝播`forward`メソッドを定義すれば、ニューラ�
         return output
 ```
 
-####trimOutput
-`trimOutput`メソッドは、`forward`メソッドの結果である`output`を受け取り、ネットワークの出力値をラベル（被説明変数）と比較可能な形で取り出します。Scikit-learnの評価モジュールを使う際には、`chainer.Variable`型のままでは扱えないためです。
+#### trimOutput
+
+`trimOutput`メソッドは、`forward`メソッドの結果である`output`を受け取り、ネットワークの出力値をラベル（被説明変数）と比較可能な形で取り出します。Scikit-learnの評価モジュールを使う際には、`chainer.Variable`型のままでは扱えないためです。<br>
 `trimOutput`メソッドは、デフォルトで`output.data`を取り出して返すので、回帰問題の際にはメソッド・オーバーライドは必要ありません。今回は10クラスの分類問題であるため、10次元列ベクトルの出力値の中で最も大きな値を持つ行番号をラベル値として取得しています。
 
 ```python
@@ -137,23 +146,26 @@ NNmanagerでは順伝播`forward`メソッドを定義すれば、ニューラ�
         return np.array(y_trimed, dtype=np.int32)
 ```
 
-###Try Example
+### Try Example
+
 上記のサンプルコードは、`./examples/mnist_simple.py`で試すことができます
 
 ```shell
 $ python ./examples/mnist_simple.py
 ```
 
-##NNpacker
+## NNpacker
+
 `NNpakcer`は、ネットワーク構造をカプセル化することにより、複雑な階層構造を持つネットワークの定義・操作を簡略化します。
 
-###Start with Example
-上述の`NNmanager`で用いた手書き文字認識のサンプルケースを改造し、少し変わったネットワークを作ることを考えます。
-ここでは、手書き文字画像の上半分と下半分を別々に学習する場合を考えます。この場合、ネットワークは複数の小さなネットワークから構成されます。具体的には、上半分と下半分を受け取るネットワークが一つずつと、それらの結果を集約するネットワークが一つの合計三つのセグメントからなります。
+### Start with Example
+
+上述の`NNmanager`で用いた手書き文字認識のサンプルケースを改造し、少し変わったネットワークを作ることを考えます。<br>
+ここでは、手書き文字画像の上半分と下半分を別々に学習する場合を考えます。この場合、ネットワークは複数の小さなネットワークから構成されます。具体的には、上半分と下半分を受け取るネットワークが一つずつと、それらの結果を集約するネットワークが一つの合計三つのセグメントからなります。<br>
 このネットワークは、一つの親ノードと二つの子ノードという形で表現することができます。`NNpacker`は、ネットワーク構造をノード一つ一つに凝縮し、つなぎ合わせることができるようにします。
 
-`NNmanager`同様、`NNpacker`も抽象クラスなので、継承する具体クラスを定義します。ここで、親ノードのクラスを`Union`、子ノードのクラスを`Upper`と`Lower`とします。
-`Upper`と`Lower`は、それぞれ一つのデータ入力（画像の上半分と下半分）を受け付けるネットワークです。`NNpacker`では、データ入力を受け付ける端子を`entryPoint`と呼びます。
+`NNmanager`同様、`NNpacker`も抽象クラスなので、継承する具体クラスを定義します。ここで、親ノードのクラスを`Union`、子ノードのクラスを`Upper`と`Lower`とします。<br>
+`Upper`と`Lower`は、それぞれ一つのデータ入力（画像の上半分と下半分）を受け付けるネットワークです。`NNpacker`では、データ入力を受け付ける端子を`entryPoint`と呼びます。<br>
 一方、`Union`は二つの子`Upper`と`Lower`を持つネットワークです。`NNpacker`では、ネットワークが持つ子は`children`で表されます。また`Union`は`entryPoint`を持たず、子である`Upper`と`Lower`の出力のみを扱います。
 
 このネットワークを図示すると、以下のようになります。
@@ -161,8 +173,8 @@ $ python ./examples/mnist_simple.py
 
 `NNpacker`では、親子関係とエントリーポイントにより、最上位の親ノードに位置するネットワークから連なる全てのネットワークを集約管理することができます。
 
-継承に必要なのは、`layers`の設定と`network`メソッドの定義です。
-`layers`はネットワークの階層ごとに名前をつけて管理するdict型オブジェクトです。
+継承に必要なのは、`layers`の設定と`network`メソッドの定義です。<br>
+`layers`はネットワークの階層ごとに名前をつけて管理するdict型オブジェクトです。<br>
 `network`メソッドは、エントリーポイントから入力されたり、子から渡されたりしたデータをネットワークに適用する処理を行います。
 
 ```python
@@ -202,8 +214,8 @@ class Lower(NNpacker):
         h2 = F.relu(self.layers['lower_l2'](h1))
         output = F.relu(self.layers['lower_l3'](h2))
         return output
-        
-    
+
+
 class Union(NNpacker):
     def __init__(self):
         layers = {
@@ -224,9 +236,10 @@ class Union(NNpacker):
         return output
 ```
 
-####execute
-このように`NNpacker`を用いて定義した複合的なネットワークは、最上位ネットワーク構造の`execute`メソッドに入力データを渡すことで順伝播処理を走らせることができます。
-今回は、`Union`のインスタンスを作り、`execute`メソッドを呼び出すことになります。このときに渡す入力データは、各エントリーポイントの名前をキーにして、データを格納したdict型のオブジェクトになります。
+#### execute
+
+このように`NNpacker`を用いて定義した複合的なネットワークは、最上位ネットワーク構造の`execute`メソッドに入力データを渡すことで順伝播処理を走らせることができます。<br>
+今回は、`Union`のインスタンスを作り、`execute`メソッドを呼び出すことになります。このときに渡す入力データは、各エントリーポイントの名前をキーにして、データを格納したdict型のオブジェクトになります。<br>
 
 ```python
 # xはmnistのデータとします
@@ -235,8 +248,9 @@ x_data = {'upper': x[:, 0:392], 'lower': x[:, 392:784]}
 union.execute(x_data)
 ```
 
-####Work with NNmanager
-`NNpacker`は、ネットワーク構造を切り出し、ラッピングしたものです。
+#### Work with NNmanager
+
+`NNpacker`は、ネットワーク構造を切り出し、ラッピングしたものです。<br>
 `NNpacker`クラスのインスタンスが持つ全ネットワーク構造は`getFunctions`で取得することができます。
 
 ```python
@@ -267,7 +281,7 @@ class MnistComplex(NNmanager, ClassifierMixin):
         return self.nnpacker.execute(x_data)
 ```
 
-`forward`メソッドの中では、`NNpacker`インスタンスの`execute`メソッドを呼び出すようにします。
+`forward`メソッドの中では、`NNpacker`インスタンスの`execute`メソッドを呼び出すようにします。<br>
 先ほどと同じように、Scikit-learnのモジュールを使って評価を行うことができます。
 
 ```python
@@ -281,7 +295,8 @@ score = cross_validation.cross_val_score(mc, x_all, y_all, cv=2)
 print score.mean()
 ```
 
-###Try Example
+### Try Example
+
 上記のサンプルコードは、`./examples/mnist_complex.py`で試すことができます
 
 ```shell
@@ -289,17 +304,18 @@ $ python ./examples/mnist_complex.py
 ```
 
 
-#Test
+# Test
+
 テストは以下のコマンドで実行できます
 
 ```shell
-$ pwd 
+$ pwd
 # /path/to/xchainer
 $ python -m unittest discover -s tests
 ```
 
 このテストでは、各機能についての動作検証を主な目的としているため、学習の反復数(epoch)が`5`と非常に短い設定になっています。実際に利用する際には、少なくとも20epoch以上の学習を行います。
-  
+
 ```
 # example output of test
 Loading MNIST data for test. This could take a while...
@@ -348,12 +364,14 @@ OK
 
 ```
 
-###Error in Loading MNIST data
+### Error in Loading MNIST data
+
 このテストではScikit-learnのMNISTデータを利用していますが、お使いのマシンに古いMNISTデータがキャッシュされていると、データの読み込み時にエラーが発生する可能性があります。その際には、古いデータをマシンから削除してもう一度お試しください。
 
 ```shell
 rm ~/scikit_learn_data/mldata/mnist-original.mat
 ```
 
-##TODO
+## TODO
+
 * README随時更新
